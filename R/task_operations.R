@@ -52,6 +52,9 @@ addTask <- function(jobId, taskId = "default", content = "parsed", ...){
 listTask <- function(jobId, content = "parsed", ...){
   batchCredentials <- getBatchCredentials()
 
+  headers <- c()
+  headers['Content-Length'] <- '0'
+
   args <- list(...)
   skipToken <- args$skipToken
 
@@ -66,7 +69,8 @@ listTask <- function(jobId, content = "parsed", ...){
   request <- AzureRequest$new(
     method = "GET",
     path = paste0("/jobs/", jobId, "/tasks"),
-    query = query
+    query = query,
+    headers = headers
   )
 
   callBatchService(request, batchCredentials, content)

@@ -39,10 +39,14 @@ addJob <- function(jobId,
 getJob <- function(jobId, content = "parsed") {
   batchCredentials <- getBatchCredentials()
 
+  headers <- c()
+  headers['Content-Length'] <- '0'
+
   request <- AzureRequest$new(
     method = "GET",
     path = paste0("/jobs/", jobId),
-    query = list("api-version" = apiVersion)
+    query = list("api-version" = apiVersion),
+    headers = headers
   )
 
   callBatchService(request, batchCredentials, content)
@@ -145,10 +149,14 @@ getJobPreparationStatus <- function(jobId, content = "parsed", ...) {
 getJobTaskCounts <- function(jobId, content = "parsed") {
   batchCredentials <- getBatchCredentials()
 
+  headers <- c()
+  headers['Content-Length'] <- '0'
+
   request <- AzureRequest$new(
     method = "GET",
     path = paste0("/jobs/", jobId, "/taskcounts"),
-    query = list("api-version" = apiVersion)
+    query = list("api-version" = apiVersion),
+    headers = headers
   )
 
   callBatchService(request, batchCredentials, content)
