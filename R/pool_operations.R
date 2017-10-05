@@ -140,10 +140,14 @@ resizePool <- function(poolId, content = "parsed", ...) {
 listPoolNodes <- function(poolId, content = "parsed", ...) {
   batchCredentials <- getBatchCredentials()
 
+  headers <- c()
+  headers['Content-Length'] <- '0'
+
   request <- AzureRequest$new(
     method = "GET",
     path = paste0("/pools/", poolId, "/nodes"),
-    query = list("api-version" = apiVersion)
+    query = list("api-version" = apiVersion),
+    headers = headers
   )
 
   callBatchService(request, batchCredentials, content)
