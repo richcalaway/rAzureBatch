@@ -127,10 +127,14 @@ getJobPreparationStatus <- function(jobId, content = "parsed", ...) {
     query["maxresults"] <- args$maxresults
   }
 
+  headers <- c()
+  headers['Content-Length'] <- '0'
+
   request <- AzureRequest$new(
     method = "GET",
     path = paste0("/jobs/", jobId, "/jobpreparationandreleasetaskstatus"),
-    query = query
+    query = query,
+    headers = headers
   )
 
   callBatchService(request, batchCredentials, content)
